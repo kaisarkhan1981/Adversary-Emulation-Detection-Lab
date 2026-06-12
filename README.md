@@ -131,22 +131,24 @@ renderXml = 1
 Download Sysmon and extract on folder
 https://learn.microsoft.com/en-us/sysinternals/downloads/sysmon
 ----
+<img width="975" height="486" alt="image" src="https://github.com/user-attachments/assets/72298df7-9ccd-480e-9c9c-ff7974037656" />
+
+---
 download XML file for Sysmon on the same folder
---
+--------
+```PowerShell
 wget -o sysmonconfig.xml https://wazuh.com/resources/blog/emulation-of-attack-techniques-and-detection-with-wazuh/sysmonconfig.xml
------
-<img width="975" height="376" alt="image" src="https://github.com/user-attachments/assets/13e0246f-f897-41a6-b160-8dd25b968b8f" />
+---------
+<img width="975" height="376" alt="image" src="https://github.com/user-attachments/assets/859182df-7e2a-4688-a364-66e0ded40381" />
+
 
 -----------
-<img width="975" height="486" alt="image" src="https://github.com/user-attachments/assets/a6c72b3b-6063-46f5-8028-0bcd84c0e970" />
-
------
 run sysmon exe
-```bash
+```PowerShell
 Sysmon64.exe -accepteula -i sysmonconfig.xml
 ```
 
-<img width="975" height="363" alt="image" src="https://github.com/user-attachments/assets/ad8f672d-02b1-474c-a558-bdf3d7ec7569" />
+<img width="975" height="486" alt="image" src="https://github.com/user-attachments/assets/34a47103-fb03-4e78-beac-dfa938b818b4" />
 
 ---
 # Restart splunk forwarder
@@ -162,21 +164,20 @@ Restart-Service SplunkForwarder
 --
 Check forwarder is running and  winevents are included
 ---------------
-<img width="975" height="308" alt="image" src="https://github.com/user-attachments/assets/4f3950d2-364b-4a47-8735-8708069dfdac" />
 
-------------
-# Splunk list forward-server
+```ppowershell
+Splunk list forward-server
+
+-----
+<img width="975" height="173" alt="image" src="https://github.com/user-attachments/assets/45b16ab4-e7bd-49c3-ae73-337f42dee694" />
+
 ---
 ```powershell
 cd “C:\Program Files\SplunkUniversalForwarder\bin”
 ```powershell
 .\splunk list inputstatus
 Authentication needed, provide use rand password that use during forwarder installation
-
 ------------
-
-<img width="975" height="173" alt="image" src="https://github.com/user-attachments/assets/516d85cd-9f4e-4053-a1c6-33fcad52daae" />
-
 
 ## 🔍 Log Verification in Splunk
 
@@ -212,14 +213,16 @@ Set-ExecutionPolicy Bypass -Scope Process -Force
 git clone https://github.com/redcanaryco/atomic-red-team.git C:\AtomicRedTeam
 
 -------------------------
-<img width="975" height="332" alt="image" src="https://github.com/user-attachments/assets/04e5c85a-07b1-4145-a045-c17023e81aa8" />
+<img width="975" height="332" alt="image" src="https://github.com/user-attachments/assets/f835dbc1-3d6f-439b-82e8-ef5c4ae86c1d" />
 
 --------------
+```powershell
 Import-Module "C:\AtomicRedTeam\invoke-atomicredteam\Invoke-AtomicRedTeam.psd1"
 -------------------
 Set Atomic Tests Path
 Run:
 --------------------
+```powershell
 $env:PathToAtomicsFolder="C:\AtomicRedTeam\atomics"
 ```
 
@@ -233,16 +236,14 @@ Invoke-AtomicTest T1053.005
 ----------------
 PS>Get-Scheduledtask |more
 -----
-<img width="975" height="527" alt="image" src="https://github.com/user-attachments/assets/dd50c049-5093-4e3e-a636-1431e4a286ad" />
+<img width="975" height="527" alt="image" src="https://github.com/user-attachments/assets/fbbd4631-40c9-4626-b2f5-cfaf866f47ae" />
+
 ----------
-
-
 ```
 ```spl
 index=wineventlog "technique_id=T1053.005"
 ```
-<img width="975" height="402" alt="image" src="https://github.com/user-attachments/assets/a44f0481-421d-44ac-8217-dec96af33a49" />
-
+<img width="975" height="402" alt="image" src="https://github.com/user-attachments/assets/33475f47-756c-4f5f-89d2-423b27ad7bc7" />
 
 ---
 
