@@ -139,16 +139,11 @@ download XML file for Sysmon on the same folder
 ```PowerShell
 wget -o sysmonconfig.xml https://wazuh.com/resources/blog/emulation-of-attack-techniques-and-detection-with-wazuh/sysmonconfig.xml
 ---------
-<img width="975" height="376" alt="image" src="https://github.com/user-attachments/assets/859182df-7e2a-4688-a364-66e0ded40381" />
-
-
------------
 run sysmon exe
 ```PowerShell
 Sysmon64.exe -accepteula -i sysmonconfig.xml
 ```
-
-<img width="975" height="486" alt="image" src="https://github.com/user-attachments/assets/34a47103-fb03-4e78-beac-dfa938b818b4" />
+<img width="975" height="363" alt="image" src="https://github.com/user-attachments/assets/0eb162e7-bb61-4ec9-894c-15728b9dad9a" />
 
 ---
 # Restart splunk forwarder
@@ -169,7 +164,8 @@ Check forwarder is running and  winevents are included
 Splunk list forward-server
 
 -----
-<img width="975" height="173" alt="image" src="https://github.com/user-attachments/assets/45b16ab4-e7bd-49c3-ae73-337f42dee694" />
+<img width="975" height="173" alt="image" src="https://github.com/user-attachments/assets/ea94f1cd-7c1a-47c5-8124-5e71e4587e90" />
+
 
 ---
 ```powershell
