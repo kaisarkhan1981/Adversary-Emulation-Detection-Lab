@@ -100,15 +100,10 @@ Admin user and password need to provide that will require to manage it. Please r
 -----------
 <img width="867" height="622" alt="image" src="https://github.com/user-attachments/assets/a84f0d14-d335-4d72-89c8-8250642df402" />
 
----------
-Configure forwarder
-
----------------
-Got to  C:\Program Files\SplunkUniversalForwarder\etc\system\local and create new file inputs.conf file and upfate file as follows
------
-
-
-### Configure Inputs (`inputs.conf`)
+--------
+# Configure forwarder
+Go to C:\Program Files\SplunkUniversalForwarder\etc\system\local and create new file inputs.conf file and 
+update file as follows
 
 ```ini
 [WinEventLog://Application]
@@ -154,19 +149,27 @@ Sysmon64.exe -accepteula -i sysmonconfig.xml
 <img width="975" height="363" alt="image" src="https://github.com/user-attachments/assets/ad8f672d-02b1-474c-a558-bdf3d7ec7569" />
 
 ---
-Restart splunk forwarder
+# Restart splunk forwarder
+```powershell
 cd “C:\Program Files\SplunkUniversalForwarder\bin”
-./splunk.exe restart
-
+---
+```powershell
+# ./splunk.exe restart
+--
 Or
+```powershell
 Restart-Service SplunkForwarder
+--
 Check forwarder is running and  winevents are included
 ---------------
 <img width="975" height="308" alt="image" src="https://github.com/user-attachments/assets/4f3950d2-364b-4a47-8735-8708069dfdac" />
 
 ------------
-Splunk list forward-server
+# Splunk list forward-server
+---
+```powershell
 cd “C:\Program Files\SplunkUniversalForwarder\bin”
+```powershell
 .\splunk list inputstatus
 Authentication needed, provide use rand password that use during forwarder installation
 
@@ -187,8 +190,6 @@ Sysmon logs:
 sourcetype="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational"
 ```
 <img width="975" height="482" alt="image" src="https://github.com/user-attachments/assets/2fb40a33-5112-47d5-9e07-565c4aea161c" />
-
-
 
 ---
 
