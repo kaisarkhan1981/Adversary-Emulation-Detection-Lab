@@ -1,11 +1,11 @@
-# 🔐 Splunk SIEM + Atomic Red Team (ART) Lab
+# Splunk SIEM + Atomic Red Team (ART) Lab
 
-## 📌 Objective
+## Objective
 Install and configure Splunk SIEM, set up a victim machine to simulate MITRE ATT&CK techniques using Atomic Red Team (ART), and analyze logs in Splunk to detect malicious activities.
 
 ---
 
-## 🧪 Lab Environment
+## Lab Environment
 
 | Machine | IP Address | Role | Ports |
 |--------|------------|------|------|
@@ -56,14 +56,14 @@ Deshboard
 
 ## 📊 Splunk Configuration
 
-### ✅ Create Index
+### Create Index
 - Settings → Indexes → New Index
 - Name: `wineventlog`
 
 <img width="975" height="909" alt="image" src="https://github.com/user-attachments/assets/6beaf792-4628-4104-9aea-ca8e7e8ccb95" />
 
 
-### ✅ Configure Receiving Port
+### Configure Receiving Port
 - Port: `9997`
 
 <img width="1028" height="202" alt="image" src="https://github.com/user-attachments/assets/2e315311-8a73-49d1-b2eb-7124fdf85f30" />
@@ -73,7 +73,7 @@ Deshboard
 
 ## 💻 Victim Machine Setup
 
-### ✅ Install Universal Forwarder
+### Install Universal Forwarder
 
 Download splunk from https://www.splunk.com/en_us/download/universal-forwarder.html
 
@@ -108,7 +108,7 @@ Got to  C:\Program Files\SplunkUniversalForwarder\etc\system\local and create ne
 -----
 
 
-### ✅ Configure Inputs (`inputs.conf`)
+### Configure Inputs (`inputs.conf`)
 
 ```ini
 [WinEventLog://Application]
@@ -224,7 +224,7 @@ $env:PathToAtomicsFolder="C:\AtomicRedTeam\atomics"
 
 ---
 
-## 🚨 Attack Simulation & Detection
+## Attack Simulation & Detection
 
 ### 🔹 Attack 1 | Persistence (T1053.005)
 ```powershell
@@ -312,7 +312,7 @@ index=wineventlog "technique_id="  | rex "technique_id=(?<mitre_id>T[0-9\.]+)"  
 
 ---
 
-## ✅ Conclusion
+## Conclusion
 
 This lab demonstrated how to deploy and configure Splunk as a SIEM, integrate endpoint telemetry using Sysmon and Universal Forwarder, and simulate real-world attacks using Atomic Red Team. The generated logs allowed effective detection and analysis of adversary behavior, providing practical experience in threat monitoring and security operations.
 
