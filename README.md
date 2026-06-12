@@ -147,22 +147,25 @@ Sysmon64.exe -accepteula -i sysmonconfig.xml
 
 ---
 # Restart splunk forwarder
-```powershell
-cd “C:\Program Files\SplunkUniversalForwarder\bin”
----
+cd "C:\Program Files\SplunkUniversalForwarder\bin"
+
 ```powershell
 # ./splunk.exe restart
---
+```
+
 Or
+
 ```powershell
 Restart-Service SplunkForwarder
---
+```
 
-```ppowershell
-Splunk list forward-server
+```powershell
+splunk list forward-server
+```
 
------
-<img width="975" height="173" alt="image" src="https://github.com/user-attachments/assets/15f639fd-98c2-417e-9bd9-b3b292907c4a" />
+---
+
+<img width="975" height="173" alt="image" src="https://github.com/user-attachments/assets/904260cb-42d1-4199-9eb3-dbc0d3b1c8db" />
 
 
 ---
@@ -201,13 +204,16 @@ Run the following command:
 ---------------------
 Set-ExecutionPolicy Bypass -Scope Process -Force
 
--------------------
+---------
 
-```powershell
+-------------------
 git clone https://github.com/redcanaryco/atomic-red-team.git C:\AtomicRedTeam
 
--------------------------
-<img width="975" height="332" alt="image" src="https://github.com/user-attachments/assets/f835dbc1-3d6f-439b-82e8-ef5c4ae86c1d" />
+--------------------
+
+![image](https://github.com/user-attachments/assets/7338c81a-e6f9-4ea8-9b0d-38342bdd13d2)
+
+--------------------------
 
 --------------
 ```powershell
@@ -227,14 +233,16 @@ $env:PathToAtomicsFolder="C:\AtomicRedTeam\atomics"
 ### 🔹 Attack 1 | Persistence (T1053.005)
 ```powershell
 Invoke-AtomicTest T1053.005
-----------------
-PS>Get-Scheduledtask |more
------
+
+PS>Get-ScheduledTask | more
+```
+
 <img width="975" height="527" alt="image" src="https://github.com/user-attachments/assets/fbbd4631-40c9-4626-b2f5-cfaf866f47ae" />
 
+
 ----------
-```
-```spl
+
+``` Splunk query to find out attack log
 index=wineventlog "technique_id=T1053.005"
 ```
 <img width="975" height="402" alt="image" src="https://github.com/user-attachments/assets/33475f47-756c-4f5f-89d2-423b27ad7bc7" />
