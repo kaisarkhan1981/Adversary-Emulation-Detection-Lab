@@ -133,13 +133,47 @@ renderXml = 1
 
 ## 🛡️ Sysmon Installation
 
+Download Sysmon and extract on folder
+https://learn.microsoft.com/en-us/sysinternals/downloads/sysmon
+----
+download XML file for Sysmon on the same folder
+--
+wget -o sysmonconfig.xml https://wazuh.com/resources/blog/emulation-of-attack-techniques-and-detection-with-wazuh/sysmonconfig.xml
+-----
+<img width="975" height="376" alt="image" src="https://github.com/user-attachments/assets/13e0246f-f897-41a6-b160-8dd25b968b8f" />
+
+-----------
+<img width="975" height="486" alt="image" src="https://github.com/user-attachments/assets/a6c72b3b-6063-46f5-8028-0bcd84c0e970" />
+
+-----
+run sysmon exe
 ```bash
 Sysmon64.exe -accepteula -i sysmonconfig.xml
 ```
 
-![](screenshots/sysmon.png)
+<img width="975" height="363" alt="image" src="https://github.com/user-attachments/assets/ad8f672d-02b1-474c-a558-bdf3d7ec7569" />
 
 ---
+Restart splunk forwarder
+cd “C:\Program Files\SplunkUniversalForwarder\bin”
+./splunk.exe restart
+
+Or
+Restart-Service SplunkForwarder
+Check forwarder is running and  winevents are included
+---------------
+<img width="975" height="308" alt="image" src="https://github.com/user-attachments/assets/4f3950d2-364b-4a47-8735-8708069dfdac" />
+
+------------
+Splunk list forward-server
+cd “C:\Program Files\SplunkUniversalForwarder\bin”
+.\splunk list inputstatus
+Authentication needed, provide use rand password that use during forwarder installation
+
+------------
+
+<img width="975" height="173" alt="image" src="https://github.com/user-attachments/assets/516d85cd-9f4e-4053-a1c6-33fcad52daae" />
+
 
 ## 🔍 Log Verification in Splunk
 
@@ -152,16 +186,39 @@ Sysmon logs:
 ```spl
 sourcetype="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational"
 ```
+<img width="975" height="482" alt="image" src="https://github.com/user-attachments/assets/2fb40a33-5112-47d5-9e07-565c4aea161c" />
 
-![](screenshots/logs.png)
+
 
 ---
 
 ## ⚔️ Atomic Red Team Setup
 
+Download and install Git from: https://git-scm.com/downloads
+Follow default installation steps.
+----------
+<img width="869" height="573" alt="image" src="https://github.com/user-attachments/assets/6df57aca-2277-48fb-9ccd-a110f38199f5" />
+
+------------
+Set PowerShell Execution Policy
+Run the following command:
+---------------------
+Set-ExecutionPolicy Bypass -Scope Process -Force
+
+-------------------
+
 ```powershell
 git clone https://github.com/redcanaryco/atomic-red-team.git C:\AtomicRedTeam
+
+-------------------------
+<img width="975" height="332" alt="image" src="https://github.com/user-attachments/assets/04e5c85a-07b1-4145-a045-c17023e81aa8" />
+
+--------------
 Import-Module "C:\AtomicRedTeam\invoke-atomicredteam\Invoke-AtomicRedTeam.psd1"
+-------------------
+Set Atomic Tests Path
+Run:
+--------------------
 $env:PathToAtomicsFolder="C:\AtomicRedTeam\atomics"
 ```
 
@@ -169,46 +226,89 @@ $env:PathToAtomicsFolder="C:\AtomicRedTeam\atomics"
 
 ## 🚨 Attack Simulation & Detection
 
-### 🔹 Persistence (T1053.005)
+### 🔹 Attack 1 | Persistence (T1053.005)
 ```powershell
 Invoke-AtomicTest T1053.005
+----------------
+PS>Get-Scheduledtask |more
+-----
+<img width="975" height="527" alt="image" src="https://github.com/user-attachments/assets/dd50c049-5093-4e3e-a636-1431e4a286ad" />
+----------
+
+
 ```
 ```spl
 index=wineventlog "technique_id=T1053.005"
 ```
-![](screenshots/attack1.png)
+<img width="975" height="402" alt="image" src="https://github.com/user-attachments/assets/a44f0481-421d-44ac-8217-dec96af33a49" />
+
 
 ---
 
-### 🔹 Defense Evasion (T1218.005)
+### 🔹Attack | 2  Defense Evasion (T1218.005)
 ```powershell
 Invoke-AtomicTest T1218.005
 ```
-![](screenshots/attack2.png)
+<img width="975" height="551" alt="image" src="https://github.com/user-attachments/assets/1f98a0dc-8215-446b-916f-13c410844d52" />
+----
+
+<img width="975" height="551" alt="image" src="https://github.com/user-attachments/assets/9e88149e-1eef-435a-964e-3b8e0e6e3857" />
+
+--------------
+
+Executed following SPL query in Splunk
+index=wineventlog "technique_id=T1218.005"
 
 ---
 
-### 🔹 Credential Access (T1003.001)
+<img width="975" height="414" alt="image" src="https://github.com/user-attachments/assets/6968eea4-10e5-45c0-9921-cbd724d9c44f" />
+----
+
+### 🔹 Attack 3 | Credential Access (T1003.001)
 ```powershell
 Invoke-AtomicTest T1003.001
 ```
-![](screenshots/attack3.png)
+<img width="975" height="370" alt="image" src="https://github.com/user-attachments/assets/55e47027-1141-4a36-9ebf-5620ca370346" />
 
+----------
+Executed following queries in Splunk
+--------
+index=wineventlog "technique_id="  | rex "technique_id=(?<mitre_id>T[0-9\.]+)"  | search mitre_id=T1003
+---
+<img width="975" height="426" alt="image" src="https://github.com/user-attachments/assets/cc0e2d24-3319-43e2-b8fc-b15d47ba23b9" />
+---
 ---
 
-### 🔹 Execution (T1059.001)
+### 🔹Attack | 4  Execution (T1059.001)
 ```powershell
 Invoke-AtomicTest T1059.001
 ```
-![](screenshots/attack4.png)
+<img width="975" height="598" alt="image" src="https://github.com/user-attachments/assets/5ae7d880-ff67-47c0-9073-d780bf6bc5d6" />
+---
+<img width="952" height="419" alt="image" src="https://github.com/user-attachments/assets/abd75c54-7195-4a8f-bed6-6774871a6383" />
+
+---------
+Executed following queries in Splunk
+----
+index=wineventlog "technique_id="  | rex "technique_id=(?<mitre_id>T[0-9\.]+)"  | search mitre_id=T1059.001
+
+---
+<img width="975" height="437" alt="image" src="https://github.com/user-attachments/assets/4e0cd843-4cd3-49f7-96e6-5915f9eac6b3" />
 
 ---
 
-### 🔹 Registry Modification (T1112)
+### 🔹 Attack | 5 Registry Modification (T1112)
 ```powershell
 Invoke-AtomicTest T1112
 ```
-![](screenshots/attack5.png)
+<img width="975" height="341" alt="image" src="https://github.com/user-attachments/assets/9b26eac9-9595-45c5-96a4-3415d1b8ffc4" />
+
+---------
+Query in Splunk for T1112
+index=wineventlog "technique_id="  | rex "technique_id=(?<mitre_id>T[0-9\.]+)"  | search mitre_id=T1112
+----------
+<img width="975" height="416" alt="image" src="https://github.com/user-attachments/assets/39d66b24-60e5-4ce9-ac7d-012af4e1d5ce" />
+
 
 ---
 
@@ -223,24 +323,4 @@ This lab demonstrated how to deploy and configure Splunk as a SIEM, integrate en
 Kaisar Ahmed Khan  
 Principal DevOps & Cloud Architect
 
----
 
-## 📁 Folder Structure
-
-```
-project/
-│── README.md
-└── screenshots/
-    ├── network-diagram.png
-    ├── splunk-dashboard.png
-    ├── index.png
-    ├── port.png
-    ├── forwarder.png
-    ├── sysmon.png
-    ├── logs.png
-    ├── attack1.png
-    ├── attack2.png
-    ├── attack3.png
-    ├── attack4.png
-    └── attack5.png
-```
