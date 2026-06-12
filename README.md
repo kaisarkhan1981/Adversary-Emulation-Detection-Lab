@@ -157,14 +157,12 @@ Or
 ```powershell
 Restart-Service SplunkForwarder
 --
-Check forwarder is running and  winevents are included
----------------
 
 ```ppowershell
 Splunk list forward-server
 
 -----
-<img width="975" height="173" alt="image" src="https://github.com/user-attachments/assets/ea94f1cd-7c1a-47c5-8124-5e71e4587e90" />
+<img width="975" height="173" alt="image" src="https://github.com/user-attachments/assets/15f639fd-98c2-417e-9bd9-b3b292907c4a" />
 
 
 ---
